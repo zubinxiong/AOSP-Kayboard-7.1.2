@@ -67,16 +67,22 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
     private SetupStepGroup mSetupStepGroup;
     private static final String STATE_STEP = "step";
     private int mStepNumber;
+    // 在涉及到跳转界面的时候置为了 true, onWindowFocusChange 的时候置为了 false
     private boolean mNeedsToAdjustStepNumberToSystemState;
-    private static final int STEP_WELCOME = 0;
-    private static final int STEP_1 = 1;
-    private static final int STEP_2 = 2;
-    private static final int STEP_3 = 3;
-    private static final int STEP_LAUNCHING_IME_SETTINGS = 4;
-    private static final int STEP_BACK_FROM_IME_SETTINGS = 5;
+
+    // 输入法的几个步骤
+    private static final int STEP_WELCOME = 0; // 欢迎使用 aosp 键盘，视频以及开始按钮
+    private static final int STEP_1 = 1; // 去设置打开 aosp 键盘
+    private static final int STEP_2 = 2; // 切换输入法
+    private static final int STEP_3 = 3; // 恭喜，完成了设置
+    private static final int STEP_LAUNCHING_IME_SETTINGS = 4; // 打开输入法设置
+    private static final int STEP_BACK_FROM_IME_SETTINGS = 5; // 从设置界面退出
 
     private SettingsPoolingHandler mHandler;
 
+    /**
+     * SettingsPoolingHandler 每 200 ms 发送一个 message 去检测当前输入法的状态(是否 enable, 是否选中 aosp 输入法两种状态)
+     */
     private static final class SettingsPoolingHandler
             extends LeakGuardHandlerWrapper<SetupWizardActivity> {
         private static final int MSG_POLLING_IME_SETTINGS = 0;
@@ -120,13 +126,16 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+        // 我们自己在做的时候即使是使用的系统的 theme 最好不要在代码里面去做，放在 AndroidManifest 中
         setTheme(android.R.style.Theme_Translucent_NoTitleBar);
         super.onCreate(savedInstanceState);
 
         mImm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        // 初始化轮询 handler
         mHandler = new SettingsPoolingHandler(this, mImm);
 
         setContentView(R.layout.setup_wizard);
+        // rootView
         mSetupWizard = findViewById(R.id.setup_wizard);
 
         if (savedInstanceState == null) {
@@ -250,6 +259,9 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         }
     }
 
+    /**
+     * 重新启动输入法的引导 activity
+     * */
     void invokeSetupWizardOfThisIme() {
         final Intent intent = new Intent();
         intent.setClass(this, SetupWizardActivity.class);
@@ -260,6 +272,9 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         mNeedsToAdjustStepNumberToSystemState = true;
     }
 
+    /**
+     * 跳转到输入法的设置界面
+     */
     private void invokeSettingsOfThisIme() {
         final Intent intent = new Intent();
         intent.setClass(this, SettingsActivity.class);
@@ -270,6 +285,9 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         startActivity(intent);
     }
 
+    /**
+     * 跳转到系统输入法界面打开开关
+     */
     void invokeLanguageAndInputSettings() {
         final Intent intent = new Intent();
         intent.setAction(Settings.ACTION_INPUT_METHOD_SETTINGS);
@@ -278,12 +296,19 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         mNeedsToAdjustStepNumberToSystemState = true;
     }
 
+    /**
+     * 打开输入法的对话框选择界面选择需要的输入法
+     */
     void invokeInputMethodPicker() {
         // Invoke input method picker.
         mImm.showInputMethodPicker();
         mNeedsToAdjustStepNumberToSystemState = true;
     }
 
+
+    /**
+     * 打开设置输入法更多语言的界面
+     */
     void invokeSubtypeEnablerOfThisIme() {
         final InputMethodInfo imi =
                 UncachedInputMethodManagerUtils.getInputMethodInfoOf(getPackageName(), mImm);
@@ -297,6 +322,10 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         startActivity(intent);
     }
 
+    /**
+     * 决定从桌面打开输入法时显示第几步
+     * @return
+     */
     private int determineSetupStepNumberFromLauncher() {
         final int stepNumber = determineSetupStepNumber();
         if (stepNumber == STEP_1) {
@@ -310,15 +339,20 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
 
     private int determineSetupStepNumber() {
         mHandler.cancelPollingImeSettings();
+        // 这里默认为 false。调试用，我们不会走到这里面
         if (FORCE_TO_SHOW_WELCOME_SCREEN) {
             return STEP_1;
         }
+
+        // 如果没有打开
         if (!UncachedInputMethodManagerUtils.isThisImeEnabled(this, mImm)) {
             return STEP_1;
         }
+        // 打开但是没有选中
         if (!UncachedInputMethodManagerUtils.isThisImeCurrent(this, mImm)) {
             return STEP_2;
         }
+        // 剩下的都返回第三步及设置完成
         return STEP_3;
     }
 
@@ -402,6 +436,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
     @Override
     public void onWindowFocusChanged(final boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
+        // 每一次涉及到系统相关界面的跳转的时候为true，焦点变化后表示需要重新判断当前是在第几步
         if (hasFocus && mNeedsToAdjustStepNumberToSystemState) {
             mNeedsToAdjustStepNumberToSystemState = false;
             mStepNumber = determineSetupStepNumber();
@@ -429,6 +464,9 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         mActionFinish.setVisibility((mStepNumber == STEP_3) ? View.VISIBLE : View.GONE);
     }
 
+    /**
+     * 引导界面的View 的 entity。和显示相关，和设置的东西关系不太大
+     */
     static final class SetupStep implements View.OnClickListener {
         public final int mStepNo;
         private final View mStepView;

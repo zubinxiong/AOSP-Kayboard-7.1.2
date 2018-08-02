@@ -20,6 +20,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+/**
+ * SetupActivity 是输入法的 mainActivity, 没有界面，只是中转去跳转到设置输入法的 界面 (SetupWizardActivity)
+ */
 public final class SetupActivity extends Activity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public final class SetupActivity extends Activity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        // isFinishing 方法可以用来判断是否处于活跃状态(false) 还是等待回收状态(true)。只有在 onDestroy 方法被调用后它才返回 true。
         if (!isFinishing()) {
             finish();
         }

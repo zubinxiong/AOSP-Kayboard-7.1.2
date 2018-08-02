@@ -24,6 +24,11 @@ import java.lang.ref.WeakReference;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * 给 handler 包装了一层，内部含有一个弱引用，避免持有对象 T 造成内存泄漏
+ * 关于 handler 的内存泄漏可以参考 https://github.com/francistao/LearningNotes
+ * @param <T>
+ */
 public class LeakGuardHandlerWrapper<T> extends Handler {
     private final WeakReference<T> mOwnerInstanceRef;
 
