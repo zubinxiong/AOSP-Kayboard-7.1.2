@@ -19,6 +19,7 @@ android {
 
     sourceSets {
         main {
+            // 指定了两个目录，打包时两个都会在里面 overridable 目录下面的很多看起来很像，实际上是不同的文件名。需要注意，同名文件在打包的时候会报错的
             java.srcDirs = ['src/main', '../java-overridable/src']
         }
         aaptOptions.noCompress ".dict"
