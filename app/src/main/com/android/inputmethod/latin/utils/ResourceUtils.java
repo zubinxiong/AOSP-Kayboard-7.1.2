@@ -196,6 +196,9 @@ public final class ResourceUtils {
         return defaultKeyboardHeight;
     }
 
+
+    // 这个类里面比较重要的是这个，获取键盘的高度，包括内置的 keyboard_heights.xml 配置，再通过和屏幕的宽高
+    // 做对比，保证最后获取到的高度在确定的百分比范围内
     public static int getDefaultKeyboardHeight(final Resources res) {
         final DisplayMetrics dm = res.getDisplayMetrics();
         final String keyboardHeightInDp = getDeviceOverrideValue(

@@ -55,6 +55,9 @@ import com.android.inputmethod.latin.utils.ImportantNoticeUtils;
 
 import java.util.ArrayList;
 
+/**
+ * 建议 条 view  候选栏
+ */
 public final class SuggestionStripView extends RelativeLayout implements OnClickListener,
         OnLongClickListener {
     public interface Listener {

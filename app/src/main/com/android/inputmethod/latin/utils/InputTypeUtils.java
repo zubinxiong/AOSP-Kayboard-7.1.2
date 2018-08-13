@@ -19,6 +19,9 @@ package com.android.inputmethod.latin.utils;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
 
+/**
+ * 用于判断输入框的属性，比如是否为密码之类的，是否是否需要自动空格
+ */
 public final class InputTypeUtils implements InputType {
     private static final int WEB_TEXT_PASSWORD_INPUT_TYPE =
             TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_WEB_PASSWORD;
@@ -30,6 +33,9 @@ public final class InputTypeUtils implements InputType {
             TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD;
     private static final int TEXT_VISIBLE_PASSWORD_INPUT_TYPE =
             TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+    /**
+     * 需要禁止使用自动空格的输入框
+     */
     private static final int[] SUPPRESSING_AUTO_SPACES_FIELD_VARIATION = {
         InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
         InputType.TYPE_TEXT_VARIATION_PASSWORD,

@@ -32,6 +32,7 @@ import static com.android.inputmethod.latin.common.Constants.ImeOption.NO_MICROP
 
 /**
  * Class to hold attributes of the input field.
+ * 持有输入框的属性的对象。包括判断是否需要显示候选栏，是否是密码框，是否需要显示语音按钮，是否需要自动插入空格
  */
 public final class InputAttributes {
     private final String TAG = InputAttributes.class.getSimpleName();

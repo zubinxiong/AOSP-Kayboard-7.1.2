@@ -29,6 +29,11 @@ import com.android.inputmethod.keyboard.MainKeyboardView;
 import com.android.inputmethod.latin.suggestions.MoreSuggestionsView;
 import com.android.inputmethod.latin.suggestions.SuggestionStripView;
 
+/**
+ * 包裹着整个键盘布局的根 view ，内部包括 main_keyboard_frame 和 emoji_palettes_view
+ *
+ * main_keyboard_frame 是键盘的主要区域 LinearLayout 下包括 SuggestionStripView 和 MainKeyboardView 两部分
+ */
 public final class InputView extends FrameLayout {
     private final Rect mInputViewRect = new Rect();
     private MainKeyboardView mMainKeyboardView;
@@ -107,6 +112,7 @@ public final class InputView extends FrameLayout {
     }
 
     /**
+     * 用于两个 view 之间传递触摸事件，SenderView 和 ReceiverView . 是否传递取决于 SenderView 判断是否需要把事件传递
      * This class forwards series of {@link MotionEvent}s from <code>SenderView</code> to
      * <code>ReceiverView</code>.
      *
@@ -148,6 +154,7 @@ public final class InputView extends FrameLayout {
 
         // Returns true if a {@link MotionEvent} is needed to be forwarded to
         // <code>ReceiverView</code>. Otherwise returns false.
+        //  当需要传递事件给 ReceiverView 的时候返回 true, 否则返回 false
         public boolean onInterceptTouchEvent(final int x, final int y, final MotionEvent me) {
             // Forwards a {link MotionEvent} only if both <code>SenderView</code> and
             // <code>ReceiverView</code> are visible.
@@ -155,6 +162,7 @@ public final class InputView extends FrameLayout {
                     mReceiverView.getVisibility() != View.VISIBLE) {
                 return false;
             }
+            // 把 senderView 的rect 坐标传递给 mEventSendingRect 这个是以屏幕的左上角为坐标原点
             mSenderView.getGlobalVisibleRect(mEventSendingRect);
             if (!mEventSendingRect.contains(x, y)) {
                 return false;
@@ -173,6 +181,7 @@ public final class InputView extends FrameLayout {
 
         // Returns true if a {@link MotionEvent} is forwarded to <code>ReceiverView</code>.
         // Otherwise returns false.
+        // 当事件传递到了 ReceiverView 返回 true， 否则返回false
         public boolean onTouchEvent(final int x, final int y, final MotionEvent me) {
             mReceiverView.getGlobalVisibleRect(mEventReceivingRect);
             // Translate global coordinates to <code>ReceiverView</code> local coordinates.
