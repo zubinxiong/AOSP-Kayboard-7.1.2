@@ -81,7 +81,7 @@ public final class RichInputConnection implements PrivateCommandPerformer {
 
     private static final int OPERATION_GET_TEXT_BEFORE_CURSOR = 0;
     private static final int OPERATION_GET_TEXT_AFTER_CURSOR = 1;
-    private static final int OPERATION_GET_WORD_RANGE_AT_CURSOR = 2;
+    private static final int OPERATION_GET_WORD_RANGE_AT_CURSOR = 2; // 获取光标处的文字范围？ 不太清楚这个操作是用来做什么的
     private static final int OPERATION_RELOAD_TEXT_CACHE = 3;
     private static final String[] OPERATION_NAMES = new String[] {
             "GET_TEXT_BEFORE_CURSOR",
@@ -92,6 +92,8 @@ public final class RichInputConnection implements PrivateCommandPerformer {
     /**
      * The amount of time the keyboard will persist in the {@link #hasSlowInputConnection} state
      * after observing a slow InputConnection event.
+     *
+     * 检测到 hasSlowInputConnection 后会持续 10 分钟这个状态
      */
     private static final long SLOW_INPUTCONNECTION_PERSIST_MS = TimeUnit.MINUTES.toMillis(10);
 

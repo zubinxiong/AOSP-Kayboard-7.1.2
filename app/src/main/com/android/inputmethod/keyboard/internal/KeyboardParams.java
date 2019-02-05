@@ -30,6 +30,9 @@ import java.util.TreeSet;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * Keyboard 的属性，包括 keyboardid， width， padding 以及 按键等属性
+ */
 public class KeyboardParams {
     public KeyboardId mId;
     public int mThemeId;

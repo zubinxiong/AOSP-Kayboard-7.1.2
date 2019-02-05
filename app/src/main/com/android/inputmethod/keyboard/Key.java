@@ -48,6 +48,8 @@ import static com.android.inputmethod.latin.common.Constants.CODE_UNSPECIFIED;
 
 /**
  * Class for describing the position and characteristics of a single key in the keyboard.
+ * 实现 Comparable 接口，实现 compareto 方法用于比较两个 key 是否相同
+ * 都是基础的属性，涉及到几个其他的类，主要是MoreKeySpec，KeyboardRow, KeyboardParams, keyStyle, KeyboardTextSet deng
  */
 public class Key implements Comparable<Key> {
     /**
@@ -57,7 +59,7 @@ public class Key implements Comparable<Key> {
 
     /** Label to display */
     private final String mLabel;
-    /** Hint label to display on the key in conjunction with the label */
+    /** Hint label to display on the key in conjunction(连词，关联) with the label */
     private final String mHintLabel;
     /** Flags of the label */
     private final int mLabelFlags;
@@ -80,7 +82,7 @@ public class Key implements Comparable<Key> {
     private static final int LABEL_FLAGS_HAS_SHIFTED_LETTER_HINT = 0x400;
     private static final int LABEL_FLAGS_HAS_HINT_LABEL = 0x800;
     // The bit to calculate the ratio of key label width against key width. If autoXScale bit is on
-    // and autoYScale bit is off, the key label may be shrunk only for X-direction.
+    // and autoYScale bit is off, the key label may be shrunk(压缩) only for X-direction.
     // If both autoXScale and autoYScale bits are on, the key label text size may be auto scaled.
     private static final int LABEL_FLAGS_AUTO_X_SCALE = 0x4000;
     private static final int LABEL_FLAGS_AUTO_Y_SCALE = 0x8000;
@@ -115,11 +117,11 @@ public class Key implements Comparable<Key> {
     private final int mX;
     /** Y coordinate of the top-left corner of the key in the keyboard layout, excluding the gap. */
     private final int mY;
-    /** Hit bounding box of the key */
+    /** Hit bounding box of the key 按键的命中区域 */
     @Nonnull
     private final Rect mHitBox = new Rect();
 
-    /** More keys. It is guaranteed that this is null or an array of one or more elements */
+    /** More keys. It is guaranteed that this is null or an array of one or more elements ，更多按键是由一串 MoreKeySpec 数组组成*/
     @Nullable
     private final MoreKeySpec[] mMoreKeys;
     /** More keys column number and flags */
@@ -168,6 +170,9 @@ public class Key implements Comparable<Key> {
     @Nullable
     private final OptionalAttributes mOptionalAttributes;
 
+    /**
+     * 可选属性， Key 的内部类，包括 outputText，inset 等
+     */
     private static final class OptionalAttributes {
         /** Text to output when pressed. This can be multiple characters, like ".com" */
         public final String mOutputText;
@@ -441,6 +446,7 @@ public class Key implements Comparable<Key> {
         mEnabled = key.mEnabled;
     }
 
+    // Redundant 冗余的
     @Nonnull
     public static Key removeRedundantMoreKeys(@Nonnull final Key key,
             @Nonnull final MoreKeySpec.LettersOnBaseLayout lettersOnBaseLayout) {

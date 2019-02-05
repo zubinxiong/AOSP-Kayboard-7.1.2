@@ -26,11 +26,14 @@ import com.android.inputmethod.latin.utils.ResourceUtils;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * 字面翻译是按键的视觉属性，例如文字大小，preview 文字大小，hint 大小，文字颜色等
+ */
 public final class KeyVisualAttributes {
     @Nullable
     public final Typeface mTypeface;
 
-    public final float mLetterRatio;
+    public final float mLetterRatio; // 字母比率？
     public final int mLetterSize;
     public final float mLabelRatio;
     public final int mLabelSize;
