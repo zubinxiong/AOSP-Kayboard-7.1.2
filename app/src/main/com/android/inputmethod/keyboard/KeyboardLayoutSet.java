@@ -78,6 +78,7 @@ public final class KeyboardLayoutSet {
     // How many layouts we forcibly keep in cache. This only includes ALPHABET (default) and
     // ALPHABET_AUTOMATIC_SHIFTED layouts - other layouts may stay in memory in the map of
     // soft-references, but we forcibly cache this many alphabetic/auto-shifted layouts.
+    // 在内存中缓存的 layout 个数，包括字母键盘和对应的大写layout，其他使用软引用的形式
     private static final int FORCIBLE_CACHE_SIZE = 4;
     // By construction of soft references, anything that is also referenced somewhere else
     // will stay in the cache. So we forcibly keep some references in an array to prevent

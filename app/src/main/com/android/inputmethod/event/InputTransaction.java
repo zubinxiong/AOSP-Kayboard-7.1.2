@@ -19,14 +19,14 @@ package com.android.inputmethod.event;
 import com.android.inputmethod.latin.settings.SettingsValues;
 
 /**
- * An object encapsulating a single transaction for input.
+ * An object encapsulating a single transaction for input.(封装单个事务以进行输入的对象)
  */
 public class InputTransaction {
     // UPDATE_LATER is stronger than UPDATE_NOW. The reason for this is, if we have to update later,
-    // it's because something will change that we can't evaluate now, which means that even if we
+    // it's because something will change that we can't evaluate(评估) now, which means that even if we
     // re-evaluate now we'll have to do it again later. The only case where that wouldn't apply
     // would be if we needed to update now to find out the new state right away, but then we
-    // can't do it with this deferred mechanism anyway.
+    // can't do it with this deferred mechanism(延时机制) anyway.
     public static final int SHIFT_NO_UPDATE = 0;
     public static final int SHIFT_UPDATE_NOW = 1;
     public static final int SHIFT_UPDATE_LATER = 2;

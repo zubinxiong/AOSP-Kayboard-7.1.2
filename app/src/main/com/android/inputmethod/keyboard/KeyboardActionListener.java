@@ -66,13 +66,13 @@ public interface KeyboardActionListener {
     public void onTextInput(String text);
 
     /**
-     * Called when user started batch input.
+     * Called when user started batch input(批量输入).
      */
     public void onStartBatchInput();
 
     /**
-     * Sends the ongoing batch input points data.
-     * @param batchPointers the batch input points representing the user input
+     * Sends the ongoing batch input points data.(发送正在进行的批输入点数据)
+     * @param batchPointers the batch input points representing the user input(表示用户输入的批输入点)
      */
     public void onUpdateBatchInput(InputPointers batchPointers);
 
@@ -91,7 +91,7 @@ public interface KeyboardActionListener {
     public void onCancelInput();
 
     /**
-     * Called when user finished sliding key input.
+     * Called when user finished sliding key input(滑动输入).
      */
     public void onFinishSlidingInput();
 

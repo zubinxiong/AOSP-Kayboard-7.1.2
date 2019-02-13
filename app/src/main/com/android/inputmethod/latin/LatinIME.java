@@ -1599,7 +1599,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     }
 
     /**
-     * After an input transaction has been executed, some state must be updated. This includes
+     * After an input transaction has been executed(执行), some state must be updated. This includes
      * the shift state of the keyboard and suggestions. This method looks at the finished
      * inputTransaction to find out what is necessary and updates the state accordingly.
      * @param inputTransaction The transaction that has been executed.

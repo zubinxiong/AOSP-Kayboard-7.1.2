@@ -27,7 +27,7 @@ import com.android.inputmethod.latin.utils.RecapitalizeStatus;
 /**
  * Keyboard state machine.
  *
- * This class contains all keyboard state transition logic.
+ * This class contains all keyboard state transition(转换) logic.
  *
  * The input events are {@link #onLoadKeyboard(int, int)}, {@link #onSaveKeyboardState()},
  * {@link #onPressKey(int,boolean,int,int)}, {@link #onReleaseKey(int,boolean,int,int)},

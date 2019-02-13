@@ -116,7 +116,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 
     /* Space key and its icon and background. */
     private Key mSpaceKey;
-    // Stuff to draw language name on spacebar.
+    // Stuff to draw language name(用来绘制语言名称的东西) on spacebar.
     private final int mLanguageOnSpacebarFinalAlpha;
     private ObjectAnimator mLanguageOnSpacebarFadeoutAnimator;
     private int mLanguageOnSpacebarFormatType;

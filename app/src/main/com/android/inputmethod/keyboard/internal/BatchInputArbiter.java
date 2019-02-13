@@ -20,7 +20,7 @@ import com.android.inputmethod.latin.common.Constants;
 import com.android.inputmethod.latin.common.InputPointers;
 
 /**
- * This class arbitrates batch input.
+ * This class arbitrates(仲裁，调处，评断) batch input(批量输入).
  * An instance of this class holds a {@link GestureStrokeRecognitionPoints}.
  * And it arbitrates multiple strokes gestured by multiple fingers and aggregates those gesture
  * points into one batch input.
